@@ -10,13 +10,6 @@ body {
   min-height: 100vh;
   overflow: hidden;
   font-family: 'Segoe UI', sans-serif;
-  
-  /* =========================================
-     FITUR BARU: AUTO-ZOOM 75% 
-     Biar di laptop siapapun ukurannya persis 
-     kayak di Live Server kamu!
-     ========================================= */
-  zoom: 0.75; 
 }
 
 /* ---- SCENE SCALING (FIXED VIEWPORT) ---- */
@@ -61,9 +54,9 @@ body {
 .glass-btn {
   background: rgba(255,255,255,0.6);
   border: 2px solid rgba(255,255,255,0.8);
-  border-radius: 50px;
-  padding: 14px 36px;
-  font-size: clamp(12px, 1.4vw, 20px);
+  border-radius: 37.5px; /* dari 50px */
+  padding: 10.5px 27px; /* dari 14px 36px */
+  font-size: clamp(9px, 1vw, 15px); /* dari 12px, 1.4vw, 20px */
   font-weight: 800;
   color: #3a0010;
   cursor: pointer;
@@ -284,21 +277,24 @@ body {
 /* PERBAIKAN POSISI TEXTAREA ENVELOPE (STATE 3) */
 /* PERBAIKAN POSISI TEXTAREA ENVELOPE (STATE 3) */
 #wish-input {
-  /* Ubah area pengetikannya jadi pakai persentase biar elastis! */
-  left: 15%;
-  top: 25%;
-  width: 70%; 
-  max-width: 100%;
-  height: 60%;
+  /* Koordinat ini mengikuti batas kotak di dalam envelopenya */
+  left: 32%;
+  top: 27%;
   
-  /* Sisa di bawah ini biarkan sama persis */
+  /* 1. KUNCI PERTAMA: Batasi lebar persis ~28 karakter */
+  width: 28ch; 
+  max-width: 80%; /* Cadangan supaya tidak jebol keluar kertas kalau di HP */
+  
+  height: 60%;
   background: transparent;
   border: none;
   outline: none;
   resize: none;
-  font-size: clamp(14px, 1.5vw, 20px);
+  ffont-size: clamp(10.5px, 1.1vw, 15px); /* dari 14px, 1.5vw, 20px */
   color: #3a0010;
   z-index: 3;
+  
+  /* 2. KUNCI KEDUA: Paksa teks turun ke bawah dan matikan scroll samping */
   white-space: pre-wrap; 
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -310,17 +306,15 @@ body {
    ============================================================ */
 .bubble-nav-wrapper {
   position: fixed;
-  top: 3%; 
+  top: 3%; /* Jarak dari atas layar */
   left: 50%;
-  transform: translateX(-50%) translateZ(0) !important;
-  -webkit-transform: translateX(-50%) translateZ(0) !important;
-  will-change: transform; /* Paksa masuk GPU layer */
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   background: rgba(255, 200, 215, 0.4);
-  border-radius: 60px;
-  padding: 8px;
-  gap: 10px;
+  border-radius: 45px; /* dari 60px */
+  padding: 6px; /* dari 8px */
+  gap: 7.5px; /* dari 10px */
   z-index: 9999; /* Pastikan selalu paling atas dari semua halaman */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -336,7 +330,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px 25px;
+  padding: 7.5px 18px; /* dari 10px 25px */
   cursor: pointer;
   color: #3a0010;
   font-family: inherit;
@@ -344,8 +338,8 @@ body {
 }
 
 .nav-item .icon {
-  font-size: clamp(16px, 1.5vw, 24px);
-  margin-bottom: 4px;
+  font-size: clamp(12px, 1.1vw, 18px); /* dari 16px, 1.5vw, 24px */
+  margin-bottom: 3px;
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -422,18 +416,26 @@ body {
 .velas:after { top: 25%; left: 0; }
 .velas:before { top: 45%; left: 0; }
 
-/* --- DESAIN API LILIN --- */
+/* --- DESAIN API LILIN (VERSI CAKEP & OPTIMAL) --- */
 .fuego {
   border-radius: 100%;
   position: absolute;
   top: -10px;
   left: 50%;
-  transform: translateX(-50%);
+  /* Posisikan ke tengah pakai margin, biar mesin GPU gak capek ngitung translateX */
+  margin-left: -2px; 
   width: 4px;
   height: 11px;
+  /* Paksa browser menyerahkan urusan animasi ke Kartu Grafis (GPU) */
+  will-change: transform; 
 }
 
-.fuego:nth-child(1) { animation: fuego 2s infinite; }
+/* KEMBALIKAN 5 KECEPATAN BERBEDA TAPI CAHAYANYA CUMA DI LAYER 1 */
+.fuego:nth-child(1) { 
+  animation: fuego 2s infinite; 
+  /* Cahaya glowing cuma ditaruh di sini biar gak berat! */
+  box-shadow: 0 0 30px 10px rgba(248, 233, 209, 0.4); 
+}
 .fuego:nth-child(2) { animation: fuego 1.5s infinite; }
 .fuego:nth-child(3) { animation: fuego 1s infinite; }
 .fuego:nth-child(4) { animation: fuego 0.5s infinite; }
@@ -442,12 +444,12 @@ body {
 @keyframes fuego {
   0%, 100% {
     background: rgba(254, 248, 97, 0.5);
-    box-shadow: 0 0 40px 10px rgba(248, 233, 209, 0.2);
+    /* Cahaya bayangan akan membesar natural mengikuti scale ini */
     transform: translateY(0) scale(1);
   }
   50% {
     background: rgba(255, 50, 0, 0.1);
-    box-shadow: 0 0 40px 20px rgba(248, 233, 209, 0.2);
+    /* Cahaya otomatis mengecil mengikuti scale(0) tanpa bikin CPU mikir */
     transform: translateY(-20px) scale(0);
   }
 }
@@ -473,19 +475,22 @@ body {
   position: fixed;
   bottom: 3%;
   left: 3%;
-  transform: translateZ(0) !important;
-  -webkit-transform: translateZ(0) !important;
-  will-change: transform;
-  background: rgba(255, 200, 215, 0.4);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  
+  /* 1. HAPUS KETIGA BARIS BACKDROP-FILTER INI */
+  /* backdrop-filter: blur(10px); */
+  /* -webkit-backdrop-filter: blur(10px); */
+  /* transform: translateZ(0) !important; */
+  
+  /* 2. UBAH BACKGROUND JADI PEKAT (Gak perlu blur lagi) */
+  background: rgba(255, 200, 215, 0.95); 
+
   border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 20px;
-  padding: 12px 16px;
+  border-radius: 15px; 
+  padding: 9px 12px; 
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  z-index: 9999; /* Wajib ada biar dia melayang di atas segalanya */
+  gap: 7.5px; 
+  z-index: 9999; 
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
@@ -500,9 +505,9 @@ body {
   background: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 14px;
+  width: 27px; /* dari 36px */
+  height: 27px; /* dari 36px */
+  font-size: 10.5px; /* dari 14px */
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -528,7 +533,7 @@ body {
   content: "";
   position: absolute;
   width: 2.5px;
-  height: 30px;
+  height: 22.5px; /* dari 30px */
   background-color: #c0002a; 
   transform: rotate(45deg);
   border-radius: 2px;
@@ -555,32 +560,47 @@ body {
 
 
 /* ============================================================
-   PERBAIKAN FRAME THUMBNAILS (Versi Figma)
-   Ditaruh di bawah agar menimpa desain yang lama
+   PERBAIKAN FRAME THUMBNAILS (Versi Bundle dengan Titik)
    ============================================================ */
+/* Pembungkus untuk 1 Frame + 1 Titik di bawahnya */
+.frame-bundle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Jarak antara frame dan titik */
+  cursor: pointer;
+}
+
 .frame-thumb {
-  width: calc((400/1836)*100vw); /* Diperbesar sedikit agar detail desain Figmanya terlihat */
+  width: calc((400/1836)*100vw); 
   max-width: 400px;
-  
-  /* Background, border-radius, dan box-shadow bawaan css DIHAPUS karena udah bawaan dari PNG Figma */
   background: transparent !important; 
   border: none !important;
   box-shadow: none !important;
   border-radius: 0 !important;
-
-  cursor: pointer;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s;
-}
-
-/* Efek saat diklik / di-hover: Membesar & Dikasih efek Drop-Shadow di sekeliling bentuk PNG */
-.frame-thumb:hover, .frame-thumb.selected { 
-  transform: translateY(-15px) scale(1.05) !important; 
-  filter: drop-shadow(0 15px 30px rgba(192, 0, 42, 0.3)); 
 }
 
 .frame-thumb img { 
   width: 100%; 
   display: block; 
+}
+
+/* =======================================================
+   ANIMASI BERSAMA: Saat Paket (Bundle) di-hover atau aktif 
+   ======================================================= */
+/* 1. Framenya Naik & Drop-shadow */
+.frame-bundle:hover .frame-thumb, 
+.frame-thumb.selected { /* Pertahankan logic class selected lama */
+  transform: translateY(-15px) scale(1.05) !important; 
+  filter: drop-shadow(0 15px 30px rgba(192, 0, 42, 0.3)); 
+}
+
+/* 2. Titiknya Membesar & Memerah */
+.frame-bundle:hover .pb-frame-dot, 
+.pb-frame-dot.active {
+  background: #c0002a; /* Warna merah tema kamu */
+  transform: scale(1.5); /* Titiknya membesar! */
 }
 
 /* ============================================================
@@ -641,11 +661,11 @@ body {
     left: 0;
     width: 100%;
     /* Gradient hitam dari bawah biar tombolnya kelihatan jelas */
-    padding: 60px 30px 20px 30px;
+    padding: 45px 22.5px 15px 22.5px; /* dari 60px 30px 20px 30px */
     background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 9px; /* dari 12px */
     z-index: 15;
     transition: opacity 0.4s ease;
     opacity: 1; /* Default muncul */
@@ -713,31 +733,53 @@ body {
 
 
 /* ============================================================
-   MOBILE & ASPECT RATIO DETECTOR (DIPERKUAT)
+   MOBILE & ASPECT RATIO DETECTOR
    ============================================================ */
-/* 
-   Memicu pemblokir jika:
-   1. Lebar layar di bawah 1024px (Tablet/HP)
-   2. Orientasi Portrait (Berdiri)
-   3. Perangkatnya punya fitur Touchscreen utama (pointer: coarse)
-*/
-@media screen and (max-width: 1024px), 
-       screen and (orientation: portrait),
-       (pointer: coarse) {
-  
+#device-blocker {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #FFE7EE;
+  z-index: 999999; /* Z-index super tinggi biar menutupi segalanya */
+  color: #c0002a;
+  text-align: center;
+  padding: 20px;
+}
+
+.blocker-content {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 40px;
+  border-radius: 30px;
+  border: 2px solid #c0002a;
+  box-shadow: 0 10px 30px rgba(192, 0, 42, 0.2);
+  max-width: 80%;
+}
+
+/* Jika lebar layar kurang dari 1024px ATAU layar berbentuk portrait (berdiri) */
+@media screen and (max-width: 1024px), screen and (orientation: portrait) {
   #device-blocker {
-    display: flex !important; /* Paksa muncul menutupi segalanya */
+    display: flex;
     justify-content: center;
     align-items: center;
   }
-  
   body {
-    overflow: hidden !important; /* Kunci biar ga bisa di-scroll */
-    zoom: 1 !important; /* Kembalikan zoom blocker ke ukuran normal */
+    overflow: hidden; /* Kunci layarnya biar ga bisa di-scroll */
   }
-  
-  /* Sembunyikan elemen web rahasianya di background biar ga ngintip */
-  .state, #global-navbar, #global-music-player {
-    display: none !important;
-  }
+}
+
+/* ============================================================
+   GPU BUG FIX: KARANTINA SVG KUE & KACA NAVBAR
+   ============================================================ */
+
+/* 1. Kurung animasi kue di layer GPU terpisah biar gak merusak layar lain */
+#cake-container, svg#cake {
+  transform: translateZ(0) !important;
+  -webkit-transform: translateZ(0) !important;
+  will-change: transform;
+}
+
+/* 2. Stabilkan efek kaca (blur) biar mesin browser gak bingung */
+.bubble-nav-wrapper, .music-player-wrapper {
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
 }

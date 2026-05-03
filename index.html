@@ -62,7 +62,7 @@
       <div class="scene">
         <!-- BACKGROUND -->
         <img src="assets/images/bg-home.png" class="bg-img" alt="" />
-          
+
         <!-- TOMBOL MUTE & RESTART (Di luar wrapper, tidak ikut tergeser) -->
         
         <!-- ========================================================================= -->
@@ -71,7 +71,7 @@
         <!-- Contoh: translate(-50px, 0) = Geser ke kiri 50 pixel -->
         <!-- Contoh: translate(0, 100px) = Geser ke bawah 100 pixel -->
         <!-- ========================================================================= -->
-        <div id="home-content-wrapper" class="abs" style="width: 100%; height: 100%; pointer-events: auto; transform: translate(-200px, 0px);">
+        <div id="home-content-wrapper" class="abs" style="width: 100%; height: 100%; pointer-events: auto; transform: translate(-100px, 0px);">
 
           <!-- CAKE -->
           <div id="cake-container" class="abs" style="left: calc((370 / 1836) * 100%); top: calc((259 / 1240) * 100%); width: calc((550 / 1836) * 100%); height: calc((660 / 1240) * 100%); z-index: 50;">
@@ -157,14 +157,14 @@
                 </div>
                 <div class="vid-controls-row">
                     <div class="vid-controls-left">
-                        <button id="btn-vid-play" class="music-btn" style="width: 30px; height: 30px;">▶️</button>
-                        <button id="btn-vid-rewind" class="music-btn" style="width: 30px; height: 30px;">⏪</button>
-                        <button id="btn-vid-forward" class="music-btn" style="width: 30px; height: 30px;">⏩</button>
-                        <button id="btn-vid-mute" class="music-btn" style="width: 30px; height: 30px; margin-left: 10px;">🔊</button>
+                        <button id="btn-vid-play" class="music-btn" style="width: 22.5px; height: 22.5px;">▶️</button>
+                        <button id="btn-vid-rewind" class="music-btn" style="width: 22.5px; height: 22.5px;">⏪</button>
+                        <button id="btn-vid-forward" class="music-btn" style="width: 22.5px; height: 22.5px;">⏩</button>
+                        <button id="btn-vid-mute" class="music-btn" style="width: 22.5px; height: 22.5px; margin-left: 10px;">🔊</button>
                         <input type="range" id="vid-volume-slider" min="0" max="1" step="0.01" value="1" class="vid-vol-slider">
                     </div>
                     <div class="vid-controls-right">
-                        <span id="vid-time" style="color:#fff; font-size: 14px; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.8);">00:00 / 00:00</span>
+                    <span id="vid-time" style="color:#fff; font-size: 10.5px; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.8);">00:00 / 00:00</span>
                     </div>
                 </div>
             </div>
@@ -209,7 +209,7 @@
     <div id="state-5" class="state">
       <div class="scene" id="pb-scene">
         <img
-          src="assets/images/bg-  photo-select.png"
+          src="assets/images/bg-photo-select.png"
           class="bg-img"
           id="pb-bg"
           alt=""
@@ -217,17 +217,20 @@
 
         <!-- SUB-VIEW: FRAME SELECT -->
         <div id="pb-select" class="abs" style="inset: 0">
+          <!-- WADAH BARU UNTUK FRAME + TITIK, DITURUNKAN KE TOP: 25% -->
           <div
             id="frame-thumbnails"
             class="abs"
             style="
               left: 50%;
-              top: calc((160 / 1240) * 100%);
+              top: 15%; /* DITURUNKAN KE BAWAH */
               transform: translateX(-50%);
               display: flex;
               gap: 40px;
+              align-items: flex-end; /* Biar titiknya sejajar di bawah */
             "
           ></div>
+        </div>
           <div
             id="pb-dots"
             class="abs"

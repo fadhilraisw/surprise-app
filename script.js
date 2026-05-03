@@ -158,6 +158,7 @@ function initHome() {
           const candle = document.createElement('div');
           candle.className = 'velas api-lilin-item';
           
+          // KEMBALIKAN KE 5 LAPIS API BIAR CAKEP!
           for(let j = 0; j < 5; j++) {
               const api = document.createElement('div');
               api.className = 'fuego';
@@ -580,25 +581,30 @@ function initPhotobooth() {
 
 function buildFrameThumbs() {
   const wrap = document.getElementById('frame-thumbnails');
-  const dots = document.getElementById('pb-dots');
   wrap.innerHTML = '';
-  dots.innerHTML = '';
   
-  selectedFrame = null; // KUNCI 1: Kosongkan pilihan saat awal masuk
+  selectedFrame = null; 
 
   FRAMES.forEach((f, i) => {
+    // Bikin pembungkus buat frame dan titik
+    const bundle = document.createElement('div');
+    bundle.className = 'frame-bundle';
+    bundle.addEventListener('click', () => selectFrame(i));
+
+    // Masukin Frame
     const div = document.createElement('div');
-    div.className = 'frame-thumb'; // KUNCI 2: Hapus (i === 0 ? ' selected' : '')
+    div.className = 'frame-thumb'; 
     const img = document.createElement('img');
     img.src = f.thumbSrc || f.src; 
     div.appendChild(img);
-    div.addEventListener('click', () => selectFrame(i));
-    wrap.appendChild(div);
+    bundle.appendChild(div);
 
+    // Masukin Titik
     const d = document.createElement('div');
-    d.className = 'pb-frame-dot'; // KUNCI 3: Hapus (i === 0 ? ' active' : '')
-    d.addEventListener('click', () => selectFrame(i));
-    dots.appendChild(d);
+    d.className = 'pb-frame-dot'; 
+    bundle.appendChild(d);
+
+    wrap.appendChild(bundle);
   });
 }
 
