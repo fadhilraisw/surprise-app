@@ -1,0 +1,739 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Playfair+Display:wght@400;700;800&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #1a0a10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ---- SCENE SCALING (FIXED VIEWPORT) ---- */
+.state { 
+  display: none; 
+  width: 100vw; 
+  height: 100vh;
+  /* Warna di luar background gambar agar menyatu kalau layar terlalu lebar/tinggi */
+  background: #FFE7EE; 
+}
+
+.state.active { 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+}
+
+/* ---- SCENE SCALING (FIXED VIEWPORT) ---- */
+.scene {
+  position: relative;
+  width: 100vw;
+  /* Gunakan dvh (Dynamic Viewport Height). Ini akan otomatis mengurangi tinggi search bar Chrome! */
+  height: 100dvh; 
+  overflow: hidden;
+  background-color: #fde6eb; /* Warna pink cadangan kalau gambar lagi loading */
+}
+
+.bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh; /* Samakan dengan scene */
+  
+  /* INI KUNCINYA: 'fill' akan menarik gambar ke segala arah (stretch) sampai mentok layar tanpa ada yang dipotong */
+  object-fit: fill; 
+  z-index: 0;
+}
+
+.abs { position: absolute; }
+
+/* ---- GLASS BUTTONS ---- */
+.glass-btn {
+  background: rgba(255,255,255,0.6);
+  border: 2px solid rgba(255,255,255,0.8);
+  border-radius: 50px;
+  padding: 14px 36px;
+  font-size: clamp(12px, 1.4vw, 20px);
+  font-weight: 800;
+  color: #3a0010;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(192,0,42,0.15);
+  transition: transform 0.15s, box-shadow 0.15s;
+  z-index: 10;
+  letter-spacing: .06em;
+}
+.glass-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(192,0,42,0.3); }
+
+/* ---- ICON BUTTONS (mute/restart) ---- */
+.icon-btn {
+  background: rgba(255,255,255,0.5);
+  border: 2px solid rgba(255,255,255,0.7);
+  border-radius: 50%;
+  width: clamp(32px, 3vw, 50px);
+  height: clamp(32px, 3vw, 50px);
+  font-size: 1.2em;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ---- QUIZ ---- */
+.quiz-input {
+  background: transparent;
+  border: none;
+  border-bottom: 2.5px solid rgba(192, 0, 42, 0.4);
+  outline: none;
+  font-size: clamp(14px, 1.5vw, 22px);
+  color: #3a0010;
+  width: calc((700 / 1836) * 100%);
+  padding: 6px 4px;
+  font-family: inherit;
+  z-index: 10;
+}
+
+/* ---- WISH TEXTAREA ---- */
+#wish-textarea {
+  left: calc((80/736)*100%);
+  top: calc((60/736)*100%);
+  width: calc((500/736)*100%);
+  height: calc((400/736)*100%);
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: clamp(12px, 1.1vw, 17px);
+  color: #3a0010;
+  font-family: inherit;
+  z-index: 3;
+  padding: 8px;
+  line-height: 1.6;
+}
+
+/* ---- SLIDER ARROWS ---- */
+.slider-arrow {
+  background: rgba(255,255,255,0.55);
+  border: none;
+  border-radius: 50%;
+  width: clamp(50px, 5vw, 90px);
+  height: clamp(50px, 5vw, 90px);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  z-index: 20;
+}
+.slider-arrow img { width: 60%; }
+
+/* ---- VIDEO DOTS (Disempurnakan untuk desain baru) ---- */
+.vid-dot {
+  width: 16px; 
+  height: 16px;
+  border-radius: 50%;
+  background: #a9a9a9; /* Warna abu-abu senada dengan desain background */
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Saat aktif, ukurannya membesar seperti di desain */
+.vid-dot.active { 
+  background: #a9a9a9; 
+  transform: scale(2.2); /* Membesar 2.2x lipat */
+}
+
+.pb-frame-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+/* Tambahkan ini biar titiknya interaktif saat di-hover mouse! */
+.pb-frame-dot:hover { 
+  background: #6b2035; 
+  transform: scale(1.2); 
+}
+
+.pb-frame-dot.active { background: #6b2035; transform: scale(1.2); }
+
+/* ---- ANIMATIONS ---- */
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes giftPop {
+  0% { transform: scale(0.3) rotate(-15deg); opacity: 0; }
+  60% { transform: scale(1.2) rotate(5deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes paperPlane {
+  0%   { transform: translate(0,0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(60vw, -40vh) rotate(-35deg); opacity: 0; }
+}
+
+@keyframes candleFlicker {
+  0%, 100% { transform: scaleY(1) translateX(0); }
+  25% { transform: scaleY(1.1) translateX(1px); }
+  75% { transform: scaleY(0.9) translateX(-1px); }
+}
+
+@keyframes countdownPop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  50%  { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.candle {
+  position: absolute;
+  font-size: clamp(24px, 3vw, 40px);
+  animation: candleFlicker 0.5s ease-in-out infinite;
+}
+
+#envelope-img { transition: transform 0.6s ease; }
+.plane-fly { animation: paperPlane 1.2s ease-in forwards !important; }
+
+/* ---- CONFETTI (JS-driven via canvas, no extra CSS needed) ---- */
+/* ============================================================
+   PERBAIKAN STATE 2 (QUIZ)
+   ============================================================ */
+.quiz-bg-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #FFE7EE;
+  background-image: url('assets/images/bg-quiz.png'); 
+  background-size: cover;
+  background-position: center;
+}
+
+.quiz-input-absolute {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;   
+  height: 4%;   
+  background: #FFFFFF; 
+  border: none;
+  border-radius: 40px;
+  outline: none;
+  font-family: inherit;
+  font-size: 2rem;
+  color: #3a0010;
+  
+  /* INI KUNCINYA */
+  padding-left: 40px; /* Atur angka ini untuk menggeser teks ke kanan */
+  padding-right: 20px; /* Sebaiknya beri padding kanan juga supaya teks tidak mentok */
+  
+  /* Opsional: Jika ingin lebar input tetap 50% meskipun ada padding */
+  box-sizing: border-box; 
+  
+  z-index: 10;
+}
+
+#quiz-q1 { top: 40.18%; }
+#quiz-q2 { top: 55.92%; }
+
+.btn-quiz-absolute {
+  position: absolute;
+  top: 65%;  /* Sesuaikan jika kurang pas */
+  left: 50%;
+  transform: translateX(-50%); /* Menengahkan tombol */
+  background: rgba(255,255,255,0.7);
+  border: 2px solid #CC1658;
+  border-radius: 40px;
+  padding: 20px 80px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #CC1658;
+  cursor: pointer;
+  transition: transform 0.2s;
+  z-index: 10;
+}
+.btn-quiz-absolute:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+
+.error-quiz-absolute {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: #CC1658;
+  font-size: 2rem;
+  font-weight: bold;
+  z-index: 10;
+}
+.hidden { display: none !important; }
+
+/* PERBAIKAN POSISI TEXTAREA ENVELOPE (STATE 3) */
+/* PERBAIKAN POSISI TEXTAREA ENVELOPE (STATE 3) */
+#wish-input {
+  /* Koordinat ini mengikuti batas kotak di dalam envelopenya */
+  left: 32%;
+  top: 27%;
+  
+  /* 1. KUNCI PERTAMA: Batasi lebar persis ~28 karakter */
+  width: 28ch; 
+  max-width: 80%; /* Cadangan supaya tidak jebol keluar kertas kalau di HP */
+  
+  height: 60%;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: clamp(14px, 1.5vw, 20px);
+  color: #3a0010;
+  z-index: 3;
+  
+  /* 2. KUNCI KEDUA: Paksa teks turun ke bawah dan matikan scroll samping */
+  white-space: pre-wrap; 
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  overflow-x: hidden; 
+}
+
+/* ============================================================
+   GLOBAL NAVBAR & GLASS BUBBLE
+   ============================================================ */
+.bubble-nav-wrapper {
+  position: fixed;
+  top: 3%; /* Jarak dari atas layar */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  background: rgba(255, 200, 215, 0.4);
+  border-radius: 60px;
+  padding: 8px;
+  gap: 10px;
+  z-index: 9999; /* Pastikan selalu paling atas dari semua halaman */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.nav-item {
+  position: relative;
+  z-index: 2; /* Teks harus di atas gelembung */
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 25px;
+  cursor: pointer;
+  color: #3a0010;
+  font-family: inherit;
+  outline: none;
+}
+
+.nav-item .icon {
+  font-size: clamp(16px, 1.5vw, 24px);
+  margin-bottom: 4px;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-item .text {
+  /* nambahin font baru di sini */
+  font-family: 'playfair display', 'lora', serif;
+  font-size: clamp(10px, 1vw, 14px);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Animasi Ikon saat aktif (Loncat dikit) */
+.nav-item.active .icon {
+  transform: translateY(-4px) scale(1.15);
+}
+
+/* Gelembung Kaca yang akan sliding */
+.glass-bubble {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 0;
+  width: 0;
+  z-index: 1; /* Di bawah teks tombol */
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50px;
+  box-shadow: inset 0 4px 6px rgba(255, 255, 255, 0.6), 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); /* Efek mumbul */
+  pointer-events: none;
+}
+
+
+/* ============================================== 
+   ANIMASI KUE & 21 LILIN
+   ============================================== */
+#cake {
+  margin: 0 !important;
+  display: block;
+}
+
+/* Animasi Jatuh Khusus Lilin (Terlihat meluncur dari luar layar atas) */
+@keyframes dropCandle {
+  /* Tambahkan variabel --tilt agar saat jatuh sudut miringnya tidak kerest! */
+  0%   { transform: translateY(-800px) rotate(var(--tilt, 0deg)); opacity: 1; } 
+  100% { transform: translateY(0) rotate(var(--tilt, 0deg)); opacity: 1; }
+}
+
+/* --- DESAIN LILIN --- */
+.velas {
+  background: #ffffff;
+  border-radius: 2px;
+  position: relative;
+  width: 3px; 
+  height: 15px;
+  margin: 0 1px;
+  z-index: 10;
+  
+  opacity: 0; 
+  transform: translateY(-800px) rotate(var(--tilt, 0deg)); /* Update di sini juga */
+}
+
+.velas:after,
+.velas:before {
+  background: rgba(255, 0, 0, 0.4);
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+}
+.velas:after { top: 25%; left: 0; }
+.velas:before { top: 45%; left: 0; }
+
+/* --- DESAIN API LILIN --- */
+.fuego {
+  border-radius: 100%;
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 11px;
+}
+
+.fuego:nth-child(1) { animation: fuego 2s infinite; }
+.fuego:nth-child(2) { animation: fuego 1.5s infinite; }
+.fuego:nth-child(3) { animation: fuego 1s infinite; }
+.fuego:nth-child(4) { animation: fuego 0.5s infinite; }
+.fuego:nth-child(5) { animation: fuego 0.2s infinite; }
+
+@keyframes fuego {
+  0%, 100% {
+    background: rgba(254, 248, 97, 0.5);
+    box-shadow: 0 0 40px 10px rgba(248, 233, 209, 0.2);
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    background: rgba(255, 50, 0, 0.1);
+    box-shadow: 0 0 40px 20px rgba(248, 233, 209, 0.2);
+    transform: translateY(-20px) scale(0);
+  }
+}
+
+@keyframes in {
+  to { transform: translateY(0); }
+}
+
+.text {
+  color: #c0002a; /* Disesuaikan dengan warna tema merahmu */
+  font-family: 'Georgia', serif; /* Disesuaikan font tema */
+  text-align: center;
+  z-index: 10;
+  position: relative;
+}
+.text h1 { font-size: 1.8em; margin-bottom: 5px; font-style: italic;}
+
+
+/* ============================================================
+   GLOBAL MUSIC PLAYER (Pojok Kiri Bawah)
+   ============================================================ */
+.music-player-wrapper {
+  position: fixed;
+  bottom: 3%;
+  left: 3%;
+  background: rgba(255, 200, 215, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999; /* Wajib ada biar dia melayang di atas segalanya */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.music-controls {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* Desain dasar tombol musik (ditambah position: relative) */
+.music-btn {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, background 0.2s;
+  position: relative; 
+  overflow: hidden;
+}
+
+.music-btn:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Efek bouncy pas tombolnya lagi dipencet */
+.music-btn:active {
+  transform: scale(0.7) !important;
+  transition: transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Garis merah yang melintang miring kalau ada class is-muted */
+.music-btn.is-muted::after {
+  content: "";
+  position: absolute;
+  width: 2.5px;
+  height: 30px;
+  background-color: #c0002a; 
+  transform: rotate(45deg);
+  border-radius: 2px;
+  z-index: 5;
+  box-shadow: 1px 1px 2px rgba(255,255,255,0.8); 
+}
+
+.music-progress-wrap {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 3px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.music-progress-fill {
+  height: 100%;
+  background: #c0002a; 
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+
+/* ============================================================
+   PERBAIKAN FRAME THUMBNAILS (Versi Figma)
+   Ditaruh di bawah agar menimpa desain yang lama
+   ============================================================ */
+.frame-thumb {
+  width: calc((400/1836)*100vw); /* Diperbesar sedikit agar detail desain Figmanya terlihat */
+  max-width: 400px;
+  
+  /* Background, border-radius, dan box-shadow bawaan css DIHAPUS karena udah bawaan dari PNG Figma */
+  background: transparent !important; 
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s;
+}
+
+/* Efek saat diklik / di-hover: Membesar & Dikasih efek Drop-Shadow di sekeliling bentuk PNG */
+.frame-thumb:hover, .frame-thumb.selected { 
+  transform: translateY(-15px) scale(1.05) !important; 
+  filter: drop-shadow(0 15px 30px rgba(192, 0, 42, 0.3)); 
+}
+
+.frame-thumb img { 
+  width: 100%; 
+  display: block; 
+}
+
+/* ============================================================
+   EFEK BOUNCY, GLOW MERAH & MENDELEP UNTUK TOMBOL PNG
+   ============================================================ */
+.bouncy-btn {
+  cursor: pointer;
+  /* Properti scale ini tidak akan merusak transform: translate yang mengatur koordinat! */
+  transition: scale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease !important;
+  scale: 1; /* Ukuran asli */
+}
+
+/* Pas di-hover: Membesar & menyala merah */
+.bouncy-btn:hover {
+  scale: 1.15 !important; 
+  filter: drop-shadow(0 0 15px rgba(192, 0, 42, 0.8)) !important;
+}
+
+/* Pas diklik/ditahan: Mendelep ke dalam */
+.bouncy-btn:active {
+  scale: 0.85 !important; 
+  filter: drop-shadow(0 0 5px rgba(192, 0, 42, 0.4)) !important;
+  /* Tambahkan durasi super singkat pas dipencet biar responsif */
+  transition: scale 0.1s ease, filter 0.1s ease !important; 
+}
+
+/*VOLUME SLIDER (Ditaruh di bawah agar menimpa desain yang lama) */
+/* desain untuk slider volume di pemutar musik */
+#music-volume-slider {
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.5);
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+/* ini untuk ngehias bulatan yang digeser-geser */
+#music-volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #c0002a;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+#music-volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+
+/* ============================================================
+   CUSTOM VIDEO CONTROLS (NETFLIX STYLE)
+   ============================================================ */
+.vid-controls-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /* Gradient hitam dari bawah biar tombolnya kelihatan jelas */
+    padding: 60px 30px 20px 30px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 15;
+    transition: opacity 0.4s ease;
+    opacity: 1; /* Default muncul */
+}
+
+/* Class ini dipakai JS untuk nyembunyiin controller */
+.vid-controls-wrapper.hide {
+    opacity: 0;
+    pointer-events: none; /* Biar pas ngilang nggak bisa keklik */
+}
+
+.vid-progress-wrap {
+    width: 100%;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    transition: height 0.2s;
+}
+.vid-progress-wrap:hover { height: 8px; }
+
+.vid-progress-fill {
+    height: 100%;
+    background: #c0002a;
+    width: 0%;
+    border-radius: 3px;
+    pointer-events: none;
+    transition: width 0.1s linear;
+}
+
+.vid-controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.vid-controls-left {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.vid-vol-slider {
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.5);
+    height: 5px;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    width: 80px;
+}
+.vid-vol-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.1s;
+}
+.vid-vol-slider::-webkit-slider-thumb:hover { transform: scale(1.3); }
+
+
+
+
+
+
+/* ============================================================
+   MOBILE & ASPECT RATIO DETECTOR
+   ============================================================ */
+#device-blocker {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #FFE7EE;
+  z-index: 999999; /* Z-index super tinggi biar menutupi segalanya */
+  color: #c0002a;
+  text-align: center;
+  padding: 20px;
+}
+
+.blocker-content {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 40px;
+  border-radius: 30px;
+  border: 2px solid #c0002a;
+  box-shadow: 0 10px 30px rgba(192, 0, 42, 0.2);
+  max-width: 80%;
+}
+
+/* Jika lebar layar kurang dari 1024px ATAU layar berbentuk portrait (berdiri) */
+@media screen and (max-width: 1024px), screen and (orientation: portrait) {
+  #device-blocker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  body {
+    overflow: hidden; /* Kunci layarnya biar ga bisa di-scroll */
+  }
+}
