@@ -219,22 +219,26 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 50%;   
-  height: 4%;   
+  
+  /* Kasih ruang napas sedikit, dari 4% naikkan ke 4.5% */
+  height: 4.5%;   
+  
   background: #FFFFFF; 
   border: none;
   border-radius: 40px;
   outline: none;
   font-family: inherit;
-  font-size: 2rem;
+  
+  /* INI KUNCI UTAMANYA: Ganti 2rem dengan ukuran elastis */
+  font-size: clamp(12px, 1.6vw, 24px); 
+  
+  /* Tarik teks biar bener-bener rata tengah secara vertikal */
+  line-height: 1; 
+  
   color: #3a0010;
-  
-  /* INI KUNCINYA */
-  padding-left: 40px; /* Atur angka ini untuk menggeser teks ke kanan */
-  padding-right: 20px; /* Sebaiknya beri padding kanan juga supaya teks tidak mentok */
-  
-  /* Opsional: Jika ingin lebar input tetap 50% meskipun ada padding */
+  padding-left: 40px; 
+  padding-right: 20px; 
   box-sizing: border-box; 
-  
   z-index: 10;
 }
 
