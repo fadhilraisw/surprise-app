@@ -54,16 +54,19 @@ body {
 .glass-btn {
   background: rgba(255,255,255,0.6);
   border: 2px solid rgba(255,255,255,0.8);
-  border-radius: 37.5px; /* dari 50px */
-  padding: 10.5px 27px; /* dari 14px 36px */
-  font-size: clamp(9px, 1vw, 15px); /* dari 12px, 1.4vw, 20px */
+  border-radius: 37.5px;
+  padding: 10.5px 27px;
+  font-size: clamp(9px, 1vw, 15px);
   font-weight: 800;
   color: #3a0010;
   cursor: pointer;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px rgba(192,0,42,0.15);
   transition: transform 0.15s, box-shadow 0.15s;
-  z-index: 10;
+  
+  /* INI KUNCINYA: Naikin dari 10 jadi 100 biar posisinya di atas kue! */
+  z-index: 100 !important; 
+  
   letter-spacing: .06em;
 }
 .glass-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(192,0,42,0.3); }
