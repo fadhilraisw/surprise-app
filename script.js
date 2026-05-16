@@ -369,7 +369,6 @@ function launchConfetti() {
   Format: { src: 'assets/videos/clip1.mp4', label: 'Clip 1' }
 */
 const VIDEOS = [
-  { src: 'assets/videos/video-coba-coba.mp4' },
   { src: 'assets/videos/video1.mp4' },
   { src: 'assets/videos/video2.mp4' },
   { src: 'assets/videos/video3.mp4' },
