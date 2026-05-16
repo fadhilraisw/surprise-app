@@ -363,10 +363,10 @@ function launchConfetti() {
   draw();
 }
 
-// ── STATE 4: FAMILY & FRIENDS ─────────────────────────────────
+// ── state 4: family & friends ─────────────────────────────────
 /*
-  Videos array: add your video src paths here.
-  Format: { src: 'assets/videos/clip1.mp4', label: 'Clip 1' }
+  videos array: add your video src paths here.
+  format: { src: 'https://res.cloudinary.com/.../video1.mp4' }
 */
 const VIDEOS = [
   { src: 'assets/videos/video1.mp4' },
@@ -377,7 +377,7 @@ const VIDEOS = [
   { src: 'assets/videos/video6.mp4' },
   { src: 'assets/videos/video7.mp4' },
   { src: 'assets/videos/video8.mp4' },
-  { src: 'assets/videos/video9.mp4' },
+  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1778906870/video9_uomau5.mp4' },
   { src: 'assets/videos/video10.mp4' },
   { src: 'assets/videos/video11.mp4' },
   { src: 'assets/videos/video12.mp4' },
