@@ -371,7 +371,7 @@ function launchConfetti() {
 const VIDEOS = [
   { src: 'assets/videos/video1.mp4' },
   { src: 'assets/videos/video2.mp4' },
-  { src: 'assets/videos/video3.mp4' },
+  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779082847/video3_cjjpgm.mp4' },
   { src: 'assets/videos/video4.mp4' },
   { src: 'assets/videos/video5.mp4' },
   { src: 'assets/videos/video6.mp4' },
