@@ -376,7 +376,7 @@ const VIDEOS = [
   { src: 'assets/videos/video5.mp4' },
   { src: 'assets/videos/video6.mp4' },
   { src: 'assets/videos/video7.mp4' },
-  { src: 'assets/videos/video8.mp4' },
+  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779507751/video8_vzgm6a.mov' },
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1778906870/video9_uomau5.mp4' },
   { src: 'assets/videos/video10.mp4' },
   { src: 'assets/videos/video11.mp4' },
