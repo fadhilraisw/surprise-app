@@ -369,10 +369,10 @@ function launchConfetti() {
   format: { src: 'https://res.cloudinary.com/.../video1.mp4' }
 */
 const VIDEOS = [
-  { src: 'assets/videos/video1.mp4' },
+  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779521777/video1_jxx7gi.mp4' },
   { src: 'assets/videos/video2.mp4' },
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779082847/video3_cjjpgm.mp4' },
-  { src: 'assets/videos/video4.mp4' },
+  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779521967/video4_vo0pq3.mp4' },
   { src: 'assets/videos/video5.mp4' },
   { src: 'assets/videos/video6.mp4' },
   { src: 'assets/videos/video7.mp4' },
