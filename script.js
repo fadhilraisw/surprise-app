@@ -380,9 +380,10 @@ const VIDEOS = [
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1778906870/video9_uomau5.mp4' }, // temen kuliah
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779900098/video10_1_1_f3k0ai.mp4' }, // temen sma
   { src: 'assets/videos/video11.mp4' }, // keanu keenan teh mel
-  { src: 'assets/videos/video12.mp4' },
+  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779900554/video12_1_wjvfrm.mp4' },
   { src: '' },
 ];
+
   
 let vidIndex = 0;
 let familyInited = false;
