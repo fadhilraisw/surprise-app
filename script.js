@@ -369,10 +369,10 @@ function launchConfetti() {
   format: { src: 'https://res.cloudinary.com/.../video1.mp4' }
 */
 const VIDEOS = [
-  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779521777/video1_jxx7gi.mp4' },
-  { src: 'assets/videos/video2.mp4' },
-  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779082847/video3_cjjpgm.mp4' },
-  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779521967/video4_vo0pq3.mp4' },
+  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779894172/video1_baru_1_1_r9kapv.mov' }, //bunda ayah teteh
+  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779894413/video2_d97cda.mp4' }, //kakek 
+  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779082847/video3_cjjpgm.mp4' }, // uti dan keluarga pak anjar
+  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779521967/video4_vo0pq3.mp4' }, // dastan jabbar 
   { src: 'assets/videos/video5.mp4' },
   { src: 'assets/videos/video6.mp4' },
   { src: 'assets/videos/video7.mp4' },
