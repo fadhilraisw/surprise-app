@@ -374,12 +374,12 @@ const VIDEOS = [
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779082847/video3_cjjpgm.mp4' }, // uti dan keluarga pak anjar
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779521967/video4_vo0pq3.mp4' }, // dastan jabbar 
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779897208/video5_1_ngqz0j.mp4' }, //uni yanda taya
-  { src: 'assets/videos/video6.mp4' }, // bu mega danu bimo
+  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1780045847/video6_qcsfal.mp4' }, //keanu keenan teh mel
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779899548/video7_ajblsv.mp4' }, // temen smp
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779899511/video8_szbw0a.mp4' }, //belva
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1778906870/video9_uomau5.mp4' }, // temen kuliah
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1780003385/video10_sebhsd.mp4' }, // temen sma
-  { src: 'assets/videos/video11.mp4' }, // keanu keenan teh mel
+  { src: 'assets/videos/video11.mp4' }, // bimo danu bu mega
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779900554/video12_1_wjvfrm.mp4' },
   { src: '' },
 ];
