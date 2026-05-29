@@ -375,7 +375,7 @@ const VIDEOS = [
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779521967/video4_vo0pq3.mp4' }, // dastan jabbar 
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779897208/video5_1_ngqz0j.mp4' }, //uni yanda taya
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1780045847/video6_qcsfal.mp4' }, //keanu keenan teh mel
-  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779899548/video7_ajblsv.mp4' }, // temen smp
+  { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1780049919/video7_1_j3ytz7.mp4' }, // temen smp
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1779899511/video8_szbw0a.mp4' }, //belva
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1778906870/video9_uomau5.mp4' }, // temen kuliah
   { src: 'https://res.cloudinary.com/db8o82eov/video/upload/v1780003385/video10_sebhsd.mp4' }, // temen sma
